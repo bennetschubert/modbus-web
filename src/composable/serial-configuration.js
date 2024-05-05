@@ -13,7 +13,7 @@ export function useSerialPortConfiguration() {
     options: [1, 2],
     defaultValue: 1
   })
-  const paritiySelect = useSelect({
+  const paritySelect = useSelect({
     options: ['none', 'even', 'odd'],
     defaultValue: 'even'
   })
@@ -27,7 +27,7 @@ export function useSerialPortConfiguration() {
       baudRate: baudRateSelect.value.value,
       dataBits: dataBitsSelect.value.value,
       stopBits: stopBitsSelect.value.value,
-      parity: paritiySelect.value.value,
+      parity: paritySelect.value.value,
       flowControl: flowControlSelect.value.value
     }
   }
@@ -36,7 +36,7 @@ export function useSerialPortConfiguration() {
     baudRateSelect,
     dataBitsSelect,
     stopBitsSelect,
-    paritiySelect,
+    paritySelect,
     flowControlSelect,
     getObject
   }

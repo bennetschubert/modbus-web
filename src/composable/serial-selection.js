@@ -1,4 +1,5 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+
 export function useSerialPortSelection() {
   const available = ref([])
   const selected = ref(null)
@@ -29,8 +30,18 @@ export function useSerialPortSelection() {
     if (iPorts.length > 0) selected.value = iPorts[0]
   }
 
+  const selectedId = computed(() => {
+    return selected.value?.id
+  })
+
   function getSelectedPort() {
     return selected.value?.ref
+  }
+
+  function selectById(id) {
+    const opt = this.options.find((o) => o.id === id)
+    if (!opt) throw new Error(`Could not find selection option with id: ${id}`)
+    selected.value = opt
   }
 
   return {
@@ -38,6 +49,8 @@ export function useSerialPortSelection() {
     selected,
     update,
     request,
-    getSelectedPort
+    getSelectedPort,
+    selectById,
+    selectedId
   }
 }

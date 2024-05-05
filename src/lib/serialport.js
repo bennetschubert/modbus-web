@@ -4,6 +4,7 @@ import Buffer from 'buffer'
 export default class Serialport extends EventEmitter {
   constructor(webPort) {
     super()
+    this.isOpen = false
     this.webPort = webPort
     this.writer = null
     this.reader = null
@@ -13,7 +14,10 @@ export default class Serialport extends EventEmitter {
     await this.webPort.open(options)
     this.writer = this.webPort.writable.getWriter()
     this.startReading()
-    setTimeout(() => this.emit('open'), 1000)
+    setTimeout(() => {
+      this.isOpen = true
+      this.emit('open')
+    }, 1000)
   }
 
   async write(dataToWrite) {
@@ -41,6 +45,7 @@ export default class Serialport extends EventEmitter {
     this.writer.releaseLock()
     await this.reader.cancel()
     await this.webPort.close()
+    this.isOpen = false
     this.writer = null
     this.reader = null
     this.emit('close')
