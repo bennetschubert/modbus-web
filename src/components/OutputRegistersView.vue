@@ -9,7 +9,7 @@ const serialStore = useSerialStore()
 const { modbus } = serialStore
 const { update, io } = modbus
 const { cycle } = storeToRefs(modbus)
-const { discreteInputs } = storeToRefs(io)
+const { outputRegisters } = storeToRefs(io)
 const api = ref(null)
 
 const gridOptions = {
@@ -21,7 +21,13 @@ const gridOptions = {
     {
       field: 'value',
       headerName: 'Wert',
-      cellDataType: 'boolean'
+      cellDataType: 'number'
+    },
+    {
+      field: 'forceValue',
+      headerName: 'Schreiben',
+      cellDataType: 'number',
+      editable: true
     },
     {
       field: 'errorMessage',
@@ -58,8 +64,8 @@ watch(
   <div class="h-100 d-flex flex-column position-relative">
     <ix-content-header
       variant="secondary"
-      header-title="Discrete Inputs"
-      header-subtitle="Lesezugriff"
+      header-title="Output Register"
+      header-subtitle="Lesezugriff-/Schreibzugriff"
       class="my-2 px-2"
     >
       <ix-icon-button icon="refresh" ghost="true" variant="primary" @click="update"
@@ -69,7 +75,7 @@ watch(
     <div class="flex-grow-1 position-relative h-100 w-100">
       <AgGridVue
         :gridOptions="gridOptions"
-        :rowData="discreteInputs"
+        :rowData="outputRegisters"
         class="ag-theme-alpine-dark ag-theme-ix h-100"
       ></AgGridVue>
     </div>

@@ -1,6 +1,8 @@
 <script setup>
 import DiscreteInputsView from './components/DiscreteInputsView.vue'
 import CoilsView from './components/CoilsView.vue'
+import InputRegistersView from './components/InputRegistersView.vue'
+import OutputRegistersView from './components/OutputRegistersView.vue'
 
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -192,8 +194,20 @@ const { autoUpdate } = modbus
       >
         <CoilsView />
       </div>
-      <div data-tab-content="3" v-if="selectedTab === 3">Content Tab 4</div>
-      <div data-tab-content="4" v-if="selectedTab === 4">Content Tab 5</div>
+      <div
+        data-tab-content="3"
+        v-if="selectedTab === 3"
+        class="flex-grow-1 h-100 position-relative"
+      >
+        <InputRegistersView />
+      </div>
+      <div
+        data-tab-content="4"
+        v-if="selectedTab === 4"
+        class="flex-grow-1 h-100 position-relative"
+      >
+        <OutputRegistersView />
+      </div>
     </div>
     <div v-else class="d-flex justify-content-center align-items-center flex-grow-1">
       <ix-message-bar :dismissible="false"

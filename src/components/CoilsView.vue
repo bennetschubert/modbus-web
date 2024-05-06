@@ -7,9 +7,9 @@ import { useSerialStore } from '../stores/serial.js'
 
 const serialStore = useSerialStore()
 const { modbus } = serialStore
-const { update } = modbus
+const { update, io } = modbus
 const { cycle } = storeToRefs(modbus)
-const { data } = storeToRefs(modbus.coils)
+const { coils } = storeToRefs(io)
 
 const api = ref(null)
 
@@ -23,6 +23,12 @@ const gridOptions = {
       field: 'value',
       headerName: 'Wert',
       cellDataType: 'boolean'
+    },
+    {
+      field: 'forceValue',
+      headerName: 'Schreiben',
+      cellDataType: 'boolean',
+      editable: true
     },
     {
       field: 'errorMessage',
@@ -70,7 +76,7 @@ watch(
     <div class="flex-grow-1 position-relative h-100 w-100">
       <AgGridVue
         :gridOptions="gridOptions"
-        :rowData="data"
+        :rowData="coils"
         class="ag-theme-alpine-dark ag-theme-ix h-100"
       ></AgGridVue>
     </div>
